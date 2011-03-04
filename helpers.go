@@ -4,6 +4,50 @@ import (
 	//"fmt"
 )
 
+func permute(items []int) chan bool {
+	c := make(chan bool, 1)	
+	n := len(items)
+	
+	swap := func(i, j int) {
+		t := items[i]
+		items[i] = items[j]
+		items[j] = t
+	}
+	
+	step := func() bool {
+		i := n-1
+		for items[i-1] >= items[i] {
+			i--
+			if i < 1 {
+				return false
+			}
+		}
+		j := n
+		for items[j-1] <= items[i-1] {
+			j--
+		}
+		swap(i-1, j-1)
+		i++
+		j = n
+		
+		for i < j {
+			swap(i-1, j-1)
+			i++
+			j--
+		}
+		return true
+	}
+	
+	go func() {
+		c <- true
+		for step() {
+			c <- true
+		}
+		c <- false
+	}()
+	return c
+}
+
 var primelookup []int64
 
 func init() {
