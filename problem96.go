@@ -563,6 +563,7 @@ Grid 50
 	
 		var temp [9*9]int
 		copy(temp[:], grid[:])
+		outer:
 		for !done(temp) {
 			// Try row
 			for i := 0; i < 9; i++ {
