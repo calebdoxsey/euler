@@ -248,5 +248,5 @@ func problem41() {
 }
 
 func main() {
-	problem45()
+	problem96()
 }
